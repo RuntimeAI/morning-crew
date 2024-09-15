@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "morning-crew-core"
+version = "0.1.0"
+description = "LLM multi-agents project using LangChain, CrewAI, and OpenAI"
+authors = ["Thomas Yu <thomas.yu@gknn3.xyz>"]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<4.0"
+langchain = ">=0.3.0,<0.4.0"
+langchain-community = "^0.3.0"
+openai = "^1.0.0"
+python-dotenv = "^1.0.0"
+langsmith = "^0.1.120"
+exa-py = "^1.1.4"
+mindsdb-sdk = "^3.1.5"
+psycopg2-binary = "^2.9.9"
+chromadb = "^0.5.5"
+bs4 = "^0.0.2"
+requests = "^2.32.3"
+markdown = "^3.7"
+weasyprint = "^62.3"
+pydantic = "^2.9.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
