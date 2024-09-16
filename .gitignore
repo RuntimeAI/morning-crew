@@ -62,6 +62,7 @@ cache/
 
 # Python virtual environment
 venv/
+myvenv/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
