@@ -154,6 +154,10 @@ celerybeat-schedule
 .venv
 env/
 venv/
+myven/
 ENV/
 env.bak/
 venv.bak/
+
+# cache folder
+cache/
