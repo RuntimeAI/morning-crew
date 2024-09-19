@@ -21,6 +21,7 @@ markdown = "^3.7"
 weasyprint = "^62.3"
 pydantic = "^2.9.1"
 streamlit = "^1.38.0"
+streamlit-chat = "^0.1.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

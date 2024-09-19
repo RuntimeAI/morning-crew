@@ -11,7 +11,7 @@ class Role:
     async def chat(self, user_input: str, conversation_memory: List[Dict[str, str]]) -> str:
         # Use conversation_memory in the response generation
         context = "\n".join([f"{entry['role']}: {entry['content']}" for entry in conversation_memory])
-        prompt = f"Given the conversation history:\n{context}\n\nRespond to the user's input: '{user_input}'"
+        prompt = f"As {self.personal_info['name']} ({self.personal_info['title']}), {self.personal_info['description']}. Given the conversation history:\n{context}\n\nRespond to the user's input: '{user_input}'"
         
         # Check if any skillset can handle the user input
         for skillset in self.skillsets:

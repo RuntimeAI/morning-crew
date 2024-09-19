@@ -7,6 +7,7 @@ from skillsets.internet_search import InternetSearch
 from skillsets.twitter_search import TwitterSearch
 from skillsets.meeting_notes_draft import MeetingNotesDraft
 import asyncio
+from streamlit_chat import message  # Import streamlit_chat
 
 # Initialize skillsets
 internet_skillset = InternetSearch(debug=True, answer_num=5)
@@ -44,19 +45,63 @@ def get_response(user_input):
     response = asyncio.run(crew.instruction(user_input))
     return response
 
-user_input = st.text_input("Enter your instruction (or 'quit' to exit):")
-
-if user_input:
+def on_input_change():
+    user_input = st.session_state.user_input
     if user_input.lower() == 'quit':
         st.stop()
     else:
         response = get_response(user_input)
         st.session_state.conversation.append({"role": "user", "content": user_input})
         st.session_state.conversation.append({"role": "ai", "content": response})
+    st.session_state.user_input = ""
 
-if st.session_state.conversation:
-    for entry in st.session_state.conversation:
-        if entry["role"] == "user":
-            st.write(f"**User:** {entry['content']}")
-        else:
-            st.write(f"**AI:** {entry['content']}")
+def on_btn_click():
+    st.session_state.conversation = []
+
+# Create a container for the chat history
+chat_placeholder = st.container()
+
+# Create a container at the bottom for the input box
+input_placeholder = st.empty()
+
+# Display the chat history in the chat_placeholder container
+with chat_placeholder:
+    chat_container = st.container()
+    with chat_container:
+        for entry in st.session_state.conversation:
+            if entry["role"] == "user":
+                message(entry['content'], is_user=True)
+            else:
+                message(entry['content'])
+        st.button("Clear message", on_click=on_btn_click)
+
+# Display the input box in the input_placeholder container
+with input_placeholder:
+    st.text_input("User Input:", on_change=on_input_change, key="user_input")
+
+# Add custom CSS to center the containers, fix the input box at the bottom with a 10px margin, and set the input box width to 70%
+st.markdown(
+    """
+    <style>
+    .stTextInput {
+        position: fixed;
+        bottom: 10px;
+        width: 70%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .stContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .stContainer > div {
+        max-height: 70vh;
+        overflow-y: auto;
+        width: 100%;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
